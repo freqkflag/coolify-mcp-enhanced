@@ -1,8 +1,8 @@
 {
-  "name": "@masonator/coolify-mcp",
-  "scope": "@masonator",
-  "version": "0.2.8",
-  "description": "MCP server implementation for Coolify",
+  "name": "@freqkflag/coolify-mcp-enhanced",
+  "scope": "@freqkflag",
+  "version": "0.2.0",
+  "description": "Enhanced MCP server for comprehensive Coolify infrastructure management with 50+ tools",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -14,10 +14,12 @@
     }
   },
   "bin": {
-    "coolify-mcp": "dist/index.js"
+    "coolify-mcp-enhanced": "dist/index.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "build": "tsc && shx chmod +x dist/*.js",
@@ -31,17 +33,50 @@
     "format:check": "prettier --check .",
     "prepare": "husky",
     "prepublishOnly": "npm test && npm run lint",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "docker:build": "docker build -t freqkflag/coolify-mcp-enhanced .",
+    "docker:run": "docker run -d --name coolify-mcp -e COOLIFY_BASE_URL= -e COOLIFY_ACCESS_TOKEN= freqkflag/coolify-mcp-enhanced"
   },
   "keywords": [
     "coolify",
     "mcp",
-    "model-context-protocol"
+    "model-context-protocol",
+    "deployment",
+    "docker",
+    "infrastructure",
+    "devops",
+    "ai",
+    "automation",
+    "self-hosted",
+    "applications",
+    "databases",
+    "services",
+    "domains",
+    "ssl",
+    "backups",
+    "monitoring"
   ],
-  "author": "Stuart Mason",
+  "author": {
+    "name": "freqkflag",
+    "email": "freqkflag@example.com",
+    "url": "https://github.com/freqkflag"
+  },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/freqkflag/coolify-mcp-enhanced.git"
+  },
+  "bugs": {
+    "url": "https://github.com/freqkflag/coolify-mcp-enhanced/issues"
+  },
+  "homepage": "https://github.com/freqkflag/coolify-mcp-enhanced#readme",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/freqkflag"
+  },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.6.1",
+    "debug": "^4.3.4",
     "reflect-metadata": "^0.2.2",
     "zod": "^3.24.2"
   },
@@ -64,5 +99,9 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }
