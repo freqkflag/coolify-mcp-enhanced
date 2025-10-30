@@ -1,0 +1,30 @@
+{
+  "name": "coolify-mcp-enhanced",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": ".."
+  },
+  "runArgs": [
+    "--env-file", ".env"
+  ],
+  "containerEnv": {
+    "MCP_SKIP_STARTUP_VALIDATION": "false",
+    "DEBUG": "coolify:mcp"
+  },
+  "overrideCommand": false,
+  "features": {},
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      },
+      "extensions": [
+        "dbaeumer.vscode-eslint"
+      ]
+    }
+  },
+  "postCreateCommand": "npm ci && npm run build",
+  "postStartCommand": "bash -lc 'nohup node dist/index.js > /tmp/mcp-server.log 2>&1 &'"
+}
+
+
