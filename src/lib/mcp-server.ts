@@ -690,7 +690,12 @@ export class CoolifyMcpServer extends McpServer {
   async connect(transport: Transport): Promise<void> {
     log('Starting server...');
     log('Validating connection...');
-    await this.client.validateConnection();
+    const skipValidation = process.env.MCP_SKIP_STARTUP_VALIDATION === 'true';
+    if (!skipValidation) {
+      await this.client.validateConnection();
+    } else {
+      log('Skipping startup validation due to MCP_SKIP_STARTUP_VALIDATION=true');
+    }
     await this.initialize();
     await super.connect(transport);
     log('Server started successfully');

@@ -25,9 +25,6 @@ export class CoolifyClient {
     if (!config.baseUrl) {
       throw new Error('Coolify base URL is required');
     }
-    if (!config.accessToken) {
-      throw new Error('Coolify access token is required');
-    }
     this.baseUrl = config.baseUrl.replace(/\/$/, '');
     this.accessToken = config.accessToken;
   }

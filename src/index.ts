@@ -13,7 +13,7 @@ async function main(): Promise<void> {
   };
 
   if (!config.accessToken) {
-    throw new Error('COOLIFY_ACCESS_TOKEN environment variable is required');
+    console.warn('Warning: COOLIFY_ACCESS_TOKEN is not set. API calls will fail until configured.');
   }
 
   const server = new CoolifyMcpServer(config);

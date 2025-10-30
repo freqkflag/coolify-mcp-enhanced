@@ -7,8 +7,8 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci --only=production && npm cache clean --force
+# Install all dependencies (including dev) for building
+RUN npm ci && npm cache clean --force
 
 # Copy source code
 COPY . .
@@ -29,9 +29,12 @@ RUN addgroup -g 1001 -S nodejs && \
 # Set working directory
 WORKDIR /app
 
+# Copy package files and install only production dependencies without running lifecycle scripts
+COPY --from=builder --chown=coolify:nodejs /app/package*.json ./
+RUN npm ci --omit=dev --ignore-scripts && npm cache clean --force
+
 # Copy built application from builder stage
 COPY --from=builder --chown=coolify:nodejs /app/dist ./dist
-COPY --from=builder --chown=coolify:nodejs /app/package*.json ./
 
 # Switch to non-root user
 USER coolify
@@ -45,6 +48,9 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 
 # Use dumb-init to handle signals properly
 ENTRYPOINT ["dumb-init", "--"]
+
+# Default: skip startup validation so container can start without creds
+ENV MCP_SKIP_STARTUP_VALIDATION=true
 
 # Start the application
 CMD ["node", "dist/index.js"]
